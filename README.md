@@ -7,3 +7,8 @@ GEOG 257: Interdisciplinary Research Methods
 September 11, 2018
 
 data and code from: https://purl.stanford.edu/wb587wt4560
+
+#Notes  
+Updated ncdf package and associated functions in `getTemperatureChange.R` script to ncdf4 - CMH  
+Added couple lines of code in `getTemperatureChange.R` to also estimate area-average temperature change for each country/region  
+Added new script `ComputeMainProjections2.R` that uses area-average temp change rather than population weighted  
