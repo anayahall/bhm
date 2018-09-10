@@ -1,6 +1,6 @@
 *** Reproduction of Burke, Hsiang, Miguel 2015
 
-global path "/Users/anayahall/projects/ds421/bhm/BurkeHsiangMiguel2015_Replication"
+global path "/Users/anayahall/projects/ds421/bhm"
 cd $path
 
 
