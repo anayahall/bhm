@@ -4,7 +4,9 @@
 
 rm(list=ls())
 
-library(ncdf)
+setwd("BurkeHsiangMiguel2015_Replication/")
+
+library(ncdf4)
 library(maptools)
 library(maps)
 library(raster)
@@ -16,8 +18,8 @@ cty1 <- cty[cty@data[,3]!="Antarctica" & cty@data[,3]!="Svalbard",]  #drop antar
 #########################################################################################
 # Read in CMIP5 global temperature projections, using data from here: http://climexp.knmi.nl/plot_atlas_form.py 
 #  these are model ensemble averages, giving temperature changes 2080-2100 minus 1986-2005
-nc <- open.ncdf("data/input/CCprojections/diff_tas_Amon_modmean_rcp85_000_2081-2100_minus_1986-2005_mon1_ave12_withsd.nc")
-tmp <- get.var.ncdf(nc,"diff")
+nc <- nc_open("data/input/CCprojections/diff_tas_Amon_modmean_rcp85_000_2081-2100_minus_1986-2005_mon1_ave12_withsd.nc")
+tmp <- ncvar_get(nc,"diff")
 r <- raster(aperm(tmp[c(73:144,1:72),72:1],c(2,1)),xmn=-180,xmx=180,ymn=-90,ymx=90)
 plot(r)
 map(,add=T)
@@ -35,7 +37,9 @@ pp <- extract(pw,cty1,small=T,progress="text")
 
 wtmn <- function(x,y) {if (length(x)>1 & sum(y)!=0) {weighted.mean(x,y)} else {mean(x)}}  # if country only covered by one cell, or if no population in aggregated grids, just report value of delta T in that cell
 Tchg <- mapply(wtmn,cc,pp)  #this gives you the country-specific population-weighted temperature change
+Tchg2 <- sapply(cc, mean)
 
+plot(Tchg, Tchg2); abline(0, 1, lty = 2, col = 2)
 
 # Now calculate a vector of "conversion factors" that translate global mean temp into country specific temperatures:  this is just the ratio of pop-weighted country-specific changes to global mean change in RCP8.5
 # This then allows us to calculate damages for various levels of warming
@@ -45,7 +49,7 @@ y <- y/cellStats(y,'sum')  #make weights sum to 1 to make weighting matrix
 tc <- cellStats(y*r,'sum')  #this is the global weighted mean temperature change
 Tconv <- Tchg/tc  #"conversion factors":  i.e. what you multiply the global mean temp by to get the country-level change in temp.  again, this is based only on RCP8.5 ensemble mean 
 
-out <- data.frame(cty1@data[,1:3],Tchg,Tconv)
+out <- data.frame(cty1@data[,1:3],Tchg,Tconv, Tchg2)
 write.csv(out,file="data/input/CCprojections/CountryTempChange_RCP85.csv",row.names=F)
 
 
