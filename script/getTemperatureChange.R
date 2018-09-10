@@ -4,8 +4,6 @@
 
 rm(list=ls())
 
-setwd("BurkeHsiangMiguel2015_Replication/")
-
 library(ncdf4)
 library(maptools)
 library(maps)
