@@ -26,10 +26,14 @@ par(mar=c(4,4,2,1))
 #  Panel A
 ########################################################
 
-resp <- read.csv("BurkeHsiangMiguel2015_Replication/data/output/estimatedGlobalResponse.csv")
-dta <- read.csv("BurkeHsiangMiguel2015_Replication/data/output/mainDataset.csv")
+resp <- read.csv("data/output/estimatedGlobalResponse.csv")
+dta <- read.csv("data/output/mainDataset.csv")
 smpl <- is.na(dta$growthWDI)==F & is.na(dta$UDel_temp_popweight)==F   #main estimation sample
-coef <- read.csv("BurkeHsiangMiguel2015_Replication/data/output/estimatedCoefficients.csv")
+coef <- read.csv("data/output/estimatedCoefficients.csv")
+
+
+dta2 <- dta %>% group_by(., iso) %>% summarise(meantemp = mean(UDel_temp_popweight, na.rm = T))
+
 
 # center response at optimum
 x = resp$x
@@ -91,7 +95,7 @@ rect(bins,base-dis*(2),bins+0.5,base-dis*(2)+cts,col="black")
 ########################################################
 #  Panels b
 ########################################################
-resp <- read.csv("BurkeHsiangMiguel2015_Replication/data/output/EffectHeterogeneity.csv")
+resp <- read.csv("data/output/EffectHeterogeneity.csv")
 poor <- dta$GDPpctile_WDIppp<50
 rich <- dta$GDPpctile_WDIppp>=50
 
@@ -115,6 +119,9 @@ smp = resp$model==m & resp$interact==0  #rich countries
 xx = resp$x[smp]
 mx = max(resp$estimate[smp])
 est = resp$estimate[smp] - mx
+min90 = resp$min90[smp] - mx
+max90 = resp$max90[smp] - mx
+polygon(c(xx,rev(xx)),c(min90,rev(max90)),col="pink",border=NA)
 lines(xx,est,lwd=2,col="red")
 
 # now add histograms of temperature exposures at the base
@@ -134,7 +141,7 @@ rect(bins,base,bins+0.5,base+cts,col="lightblue")
 ########################################################
 #  Panel c
 ########################################################
-resp <- read.csv("BurkeHsiangMiguel2015_Replication/data/output/EffectHeterogeneityOverTime.csv")
+resp <- read.csv("data/output/EffectHeterogeneityOverTime.csv")
 early <- dta$year<1990
 
 smp = resp$interact==1  #early period
@@ -151,7 +158,10 @@ lines(xx,est,lwd=2,col="steelblue3")
 smp = resp$interact==0  #poor countries
 xx = resp$x[smp]
 mx = max(resp$estimate[smp])
-est = resp$estimate[smp] - mx  
+est = resp$estimate[smp] - mx
+min90 = resp$min90[smp] - mx
+max90 = resp$max90[smp] - mx
+polygon(c(xx,rev(xx)),c(min90,rev(max90)),col="pink",border=NA)
 lines(xx,est,lwd=2,col="red")
 
 # now add histograms of temperature exposures at the base
@@ -172,7 +182,7 @@ rect(bins,base,bins+0.5,base+cts,col="lightblue")
 #  Panels d, e
 ########################################################
 
-resp <- read.csv("BurkeHsiangMiguel2015_Replication/data/output/EffectHeterogeneity.csv")
+resp <- read.csv("data/output/EffectHeterogeneity.csv")
 poor <- dta$GDPpctile_WDIppp<50
 rich <- dta$GDPpctile_WDIppp>=50
 resp <- resp[resp$x>=5,]  #dropping estimates below 5C, because so little poor country exposure there
@@ -194,7 +204,10 @@ for (m in toplot) {
   smp = resp$model==m & resp$interact==0  #poor countries
   xx = resp$x[smp]
   mx = max(resp$estimate[smp])
-  est = resp$estimate[smp] - mx  
+  est = resp$estimate[smp] - mx
+  min90 = resp$min90[smp] - mx
+  max90 = resp$max90[smp] - mx
+  polygon(c(xx,rev(xx)),c(min90,rev(max90)),col="pink",border=NA)
   lines(xx,est,lwd=2,col="red")
   
 }
