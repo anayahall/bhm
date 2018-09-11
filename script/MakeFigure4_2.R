@@ -29,8 +29,8 @@ yrs <- 2010:2099
 scens <- c("base","SSP"%&%1:5)
 scen=6
 
-load("data/output/projectionOutput2/GDPcapCC_"%&%j%&%"_"%&%scens[scen]%&%".Rdata")
-load("data/output/projectionOutput2/GDPcapNoCC_"%&%j%&%"_"%&%scens[scen]%&%".Rdata")
+load("data/output/projectionOutput2/GDPcapCC_"%&%j%&%"_"%&%scens[scen]%&%"2.Rdata")
+load("data/output/projectionOutput2/GDPcapNoCC_"%&%j%&%"_"%&%scens[scen]%&%"2.Rdata")
 proj <- (GDPcapCC[,90,1]/GDPcapNoCC[,90,1] - 1)*100
 proj[proj>100] = 100
 rg <- range(proj,na.rm=T)
@@ -81,8 +81,8 @@ scen=6 # SSP5
 iso <- read.csv("data/input/iso/ISOcountryCodes.csv")
 region <- read.csv("data/input/iso/ISOregionCodes.csv")
 iso <- merge(iso,region,by="sub.region.code")
-load("data/output/projectionOutput2/GDPcapCC_"%&%j%&%"_"%&%scens[scen]%&%".Rdata")
-load("data/output/projectionOutput2/GDPcapNoCC_"%&%j%&%"_"%&%scens[scen]%&%".Rdata")
+load("data/output/projectionOutput2/GDPcapCC_"%&%j%&%"_"%&%scens[scen]%&%"2.Rdata")
+load("data/output/projectionOutput2/GDPcapNoCC_"%&%j%&%"_"%&%scens[scen]%&%"2.Rdata")
 load("data/output/projectionOutput2/popProjections.Rdata")
 popproj <- popProjections[[scen]]
 nms <- as.character(iso$alpha.3)
