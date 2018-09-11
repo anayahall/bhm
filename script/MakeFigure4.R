@@ -1,7 +1,7 @@
 
 #  SCRIPT TO MAKE FIGURE 4 IN BURKE, HSIANG, MIGUEL
 
-rm(list = ls())
+#rm(list = ls())
 
 require(maptools)
 require(fields)
@@ -9,10 +9,10 @@ require(classInt)
 require(plotrix)
 require(data.table)
 require(dplyr)
-require(ncdf)
+require(ncdf4)
 require(raster)
 library(maps)
-library(wq)
+#library(wq)
 library(ggplot2)
 library(xtable)
 library(reshape2)
