@@ -9,7 +9,7 @@ require(classInt)
 require(plotrix)
 require(data.table)
 require(dplyr)
-require(ncdf)
+require(ncdf4)
 require(raster)
 library(maps)
 library(wq)
@@ -23,7 +23,7 @@ runs <- c("pooled","pooled5lag","richpoor","richpoor5lag") #historical models
 scens <- c("base","SSP"%&%1:5)  #socioeconomic scenarios
 yrs <- 2010:2099
 
-iam <- read.csv("data/IAMdata/ProcessedKoppData.csv")
+iam <- read.csv("data/input/IAMdata/ProcessedKoppData.csv") #fixed pathway to csv (needed /input/)
 mods <- c("DICE","FUND","PAGE")
 iam <- iam[iam$IAM%in%mods,]
 inc <- sort(unique(iam$T[iam$T<=6 & iam$T>1]))  #temperatures under which some IAM was run
@@ -42,7 +42,7 @@ ltyz = c("dashed","dotted","solid")
 plot(1,type="n",xlim=c(0.8,5),ylim=c(-90,50),xlab="temperature increase by 2100 (C)", ylab="% change in global GDP", las=1,cex.lab=2)
 abline(h=0)
 for (j in 1:length(runs))  {
-  load("data/output/projectionOutput/DamageFunction_"%&%runs[j]%&%".Rdata")
+  load("data/output/projectionOutput/growthProjections.Rdata") 
   cc <- (tots[,,1]/tots[,,2] - 1)*100
   for (i in 1:3) 
     lines(incs,cc[,i],col=colz[j],lty=ltyz[i],lwd=2)
