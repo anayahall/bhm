@@ -4,8 +4,8 @@
 
 clear all
 set mem 1G
-set matsize 10000
-set maxvar 10000
+set matsize 800
+* set maxvar 800
 set more off
 
 // ---------- ESTIMATE GLOBAL RESPONSE WITH BASELINE REGRESSION SPECIFICATION   
