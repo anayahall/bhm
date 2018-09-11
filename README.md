@@ -13,5 +13,6 @@ Updated ncdf package and associated functions in `getTemperatureChange.R` script
 Added couple lines of code in `getTemperatureChange.R` to also estimate area-average temperature change for each country/region  
 Added new script `ComputeMainProjections2.R` that uses area-average temp change rather than population weighted  
 
-Ran the GenerateBootstrapData.do on Stata to prepare for recreation of Figure 4 - ALH
-Played around with RSource Stata package to see if I could create a single replication .do file in Stata that runs all data preparation and calls the R code to create our figures. 
+Ran the `GenerateBootstrapData.do` on Stata to prepare for recreation of Figure 4 - ALH
+Played around with "rsource" Stata package to see if I could create a single replication .do file in Stata that runs all data preparation and calls the R code to create our figures. 
+Tried to do some manipulation to Figure 2 as well and added a `RemakeFigure2.R` script. In the end, the only thing that seemed like a reasonable amendment to the original figure was to add a confidence interval (in pink) for the rich countries in panels c-d. 
