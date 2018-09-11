@@ -42,7 +42,7 @@ ltyz = c("dashed","dotted","solid")
 plot(1,type="n",xlim=c(0.8,5),ylim=c(-90,50),xlab="temperature increase by 2100 (C)", ylab="% change in global GDP", las=1,cex.lab=2)
 abline(h=0)
 for (j in 1:length(runs))  {
-  load("data/output/projectionOutput/growthProjections.Rdata") 
+  load("data/output/projectionOutput/DamageFunction_"%&%runs[j]%&%".Rdata") 
   cc <- (tots[,,1]/tots[,,2] - 1)*100
   for (i in 1:3) 
     lines(incs,cc[,i],col=colz[j],lty=ltyz[i],lwd=2)
